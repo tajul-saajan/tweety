@@ -1,0 +1,17 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Tweety') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="lg:max-w-7xl  mx-auto sm:px-6 lg:px-8">
+
+            @section('content')
+                @include('profile._explore_contents')
+            @endsection
+
+        </div>
+    </div>
+</x-app-layout>
