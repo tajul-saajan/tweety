@@ -7,6 +7,12 @@ namespace App\Models;
 trait Followable
 {
 
+    public function follows()
+    {
+        return $this->belongsToMany(User::class,
+            'follows', 'user_id', 'following_user_id');
+    }
+    
     public function isFollowing(User $user)
     {
         return $this->follows()
@@ -14,11 +20,6 @@ trait Followable
             ->exists();
     }
 
-    public function follows()
-    {
-        return $this->belongsToMany(User::class,
-            'follows', 'user_id', 'following_user_id');
-    }
 
     public function follow(User $user)
     {
