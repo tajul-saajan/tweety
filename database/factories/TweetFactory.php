@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Tweet;
 use App\Models\User;
+use App\Models\Tweet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TweetFactory extends Factory
@@ -24,7 +24,7 @@ class TweetFactory extends Factory
     {
         return [
             'user_id' => Factory::factoryForModel(User::class),
-            'body' => $this->faker->sentence()
+            'body'    => $this->faker->sentence(),
         ];
     }
 }

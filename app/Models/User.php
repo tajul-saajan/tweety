@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -28,7 +28,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'avatar'
+        'avatar',
     ];
 
     /**
@@ -66,15 +66,17 @@ class User extends Authenticatable
         $ids = $this->follows->pluck('id');
         $ids->push($this->id);
 
-        return Tweet::whereIn('user_id',$ids)->latest()->get();
+        return Tweet::whereIn('user_id', $ids)->latest()->get();
     }
 
-    public function tweets() {
+    public function tweets()
+    {
         return $this->hasMany(Tweet::class);
     }
 
-    public function getAvatarAttribute() {
-        return "https://i.pravatar.cc/200?u=".$this->email;
+    public function getAvatarAttribute()
+    {
+        return 'https://i.pravatar.cc/200?u=' . $this->email;
     }
 
     public function getRouteKeyName()
@@ -84,8 +86,7 @@ class User extends Authenticatable
 
     public function path($append='')
     {
-        $path = route('profile',$this->username);
-        return $append ? "{$path}/{$append}": $path;
+        $path = route('profile', $this->username);
+        return $append ? "{$path}/{$append}" : $path;
     }
-
 }

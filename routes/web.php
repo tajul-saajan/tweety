@@ -19,23 +19,22 @@ Route::get('/', function () {
 
 Route::post('/tweets', 'App\Http\Controllers\TweetController@store');
 
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $tweets = auth()->user()->timeline();
     return view('dashboard', compact('tweets'));
 })->name('dashboard');
 
-
-Route::get('/profile/{user:username}',
-    'App\Http\Controllers\ProfilesController@show')
+Route::get(
+    '/profile/{user:username}',
+    'App\Http\Controllers\ProfilesController@show'
+)
     ->name('profile');
 
-
 Route::middleware('auth')->group(function () {
-
-    Route::post('/profile/{user:username}/follow',
-        'App\Http\Controllers\FollowsController@store');
-
+    Route::post(
+        '/profile/{user:username}/follow',
+        'App\Http\Controllers\FollowsController@store'
+    );
 
     Route::get('profile/{user:username}/edit', "App\Http\Controllers\ProfilesController@edit")
         ->middleware('can:edit,user');
@@ -43,11 +42,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/{user:username}', 'App\Http\Controllers\ProfilesController@update')
         ->name('profile_update');
 
-    Route::get('explore',"App\Http\Controllers\ExploreController@index");
+    Route::get('explore', "App\Http\Controllers\ExploreController@index");
 });
-
-
-
-
-
-
