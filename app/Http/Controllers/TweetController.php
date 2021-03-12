@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tweet;
+use App\Events\TweetUpdateEvent;
 
 class TweetController extends Controller
 {
@@ -10,10 +11,12 @@ class TweetController extends Controller
     {
         //persist the tweet
         $attributes = request()->validate(['body' => 'required|max:255']);
-        Tweet::create([
+        $tweet=Tweet::create([
             'user_id' => auth()->id(),
             'body' => $attributes['body']
         ]);
+
+        event(new TweetUpdateEvent($tweet));
 
         return redirect('dashboard');
     }
